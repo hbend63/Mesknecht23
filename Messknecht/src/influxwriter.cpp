@@ -29,7 +29,7 @@ void InfluxWriterClass::init()
 {
     Configuration.read();
     isConnected = false;
-    _updateTimeout.set(1000);
+    _updateTimeout.set(5000);
     
     for (int channel=0; channel < CHAN_MAX_COUNT; channel++)
       _lastTimestamp[channel] = millis();
@@ -51,7 +51,7 @@ void InfluxWriterClass::run()
                     id.concat("_");
                     id.concat(config.AD_Converter.ADChannels[channel].Name);
                     sensor.addTag("Sensor-Channel", id);
-                    sensor.addField("value", ADConverter.scaleDat(channel));
+                    sensor.addField("value", ADConverter.scaleDat(channel+1));
 
                     // Print what are we exactly writing
                     MessageOutput.print("Writing: ");

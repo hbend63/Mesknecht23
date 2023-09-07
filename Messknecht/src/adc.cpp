@@ -25,26 +25,22 @@ ADCClass::ADCClass()
 
 float ADCClass::scaleDat(uint8_t channel)
 { 
-  _error = !(channel < CHAN_MAX_COUNT+1);
+  _error = !(channel <= CHAN_MAX_COUNT);
   if (_error) {
     return 0;
   }  
-  MessageOutput.print("CH: ");
-  MessageOutput.println(channel);   
-  MessageOutput.print("RAW: ");
-  MessageOutput.println(_channelRawData[channel]);
-  MessageOutput.print("DLG-MAX: ");
-  MessageOutput.println(config.AD_Converter.ADChannels[channel].dglMax);
-
-  double faktor = (_channelRawData[channel+1]-config.AD_Converter.ADChannels[channel].dglMin)/(1.0*config.AD_Converter.ADChannels[channel].dglMax-config.AD_Converter.ADChannels[channel].dglMin);
-  double result = (config.AD_Converter.ADChannels[channel].sclMax-config.AD_Converter.ADChannels[channel].sclMin)*faktor+config.AD_Converter.ADChannels[channel].sclMin;
+  uint8_t channel_int=channel-1;
+  double faktor = 1.0*(_channelRawData[channel]-config.AD_Converter.ADChannels[channel_int].dglMin)/(config.AD_Converter.ADChannels[channel_int].dglMax-config.AD_Converter.ADChannels[channel_int].dglMin);
+  double result = (config.AD_Converter.ADChannels[channel_int].sclMax-config.AD_Converter.ADChannels[channel_int].sclMin)*faktor+config.AD_Converter.ADChannels[channel_int].sclMin;
   return result;
 }
 
-u_int16_t ADCClass::rawData(u_int8_t channel)
-{  _error = !(channel < CHAN_MAX_COUNT);
+u_int32_t ADCClass::rawData(u_int8_t channel)
+{  _error = !(channel <= CHAN_MAX_COUNT);
    if (_error) return 0;    
-   return _channelRawData[channel+1];   
+  MessageOutput.print("rae CH: ");
+  MessageOutput.println(channel);
+   return _channelRawData[channel];   
 }
 
 void ADCClass::readADC()
@@ -58,6 +54,14 @@ void ADCClass::readADC()
   }  
   for (int channel = 0; channel < ADC_CHANNEL_COUNT; channel++)
      _channelRawData[channel]=data[channel]/5; 
+  
+  // Korrektur CH1 bis CH7 und Spannung als virtueller Digitalwert
+  for (int channel = 1; channel < ADC_CHANNEL_COUNT; channel++)
+  {
+     double Uref=1.2*4095/_channelRawData[0];
+     double Uakt  = Uref/4095*_channelRawData[channel];
+     _channelRawData[channel]=Uakt*10000;
+  }  
 }
 
 void ADCClass::init()
@@ -68,6 +72,7 @@ void ADCClass::init()
     _lastTimestamp=millis();
 }
 
+// Take a new value every Second (can be tuned...)
 void ADCClass::loop()
 {  
     if (millis()-_lastTimestamp > 1000)

@@ -37,8 +37,8 @@
 
 struct CHANNEL_CONFIG_T {
     uint8_t channelId;
-    uint16_t dglMin;
-    uint16_t dglMax;
+    uint32_t dglMin;
+    uint32_t dglMax;
     float sclMin;
     float sclMax;
     uint16_t takt_s;

@@ -155,7 +155,7 @@ void WebApiADCClass::onADCRawValuesGet(AsyncWebServerRequest* request)
     JsonObject root = response->getRoot();
     JsonArray channels = root.createNestedArray("datavalues");
     for (int channel = 0; channel < CHAN_MAX_COUNT; channel++) {
-        uint16_t val = ADConverter.rawData(channel);
+        uint16_t val = ADConverter.rawData(channel+1);
         MessageOutput.print("Raw-Data Ch ");
         MessageOutput.print(channel);
         MessageOutput.print(": ");
@@ -186,10 +186,10 @@ void WebApiADCClass::onADCScaleValuesGet(AsyncWebServerRequest* request)
         MessageOutput.print("Scale-Data Ch ");
         MessageOutput.print(channel);
         MessageOutput.print(": ");
-        MessageOutput.println(ADConverter.scaleDat(channel));
+        MessageOutput.println(ADConverter.scaleDat(channel+1));
         JsonObject chanData = channels.createNestedObject();   
         chanData["id"] = channel+1;   
-        chanData["value"] = ADConverter.scaleDat(channel);
+        chanData["value"] = ADConverter.scaleDat(channel+1);
         chanData["takt"] = config.AD_Converter.ADChannels[channel].takt_s;
     }    
     String json;

@@ -31,7 +31,7 @@
               <td>{{ channel.id }}</td>
               <td>{{ channel.name }}</td>
 
-              <td>{{ channel.value}}</td>
+              <td>{{ channel.value.toFixed(3)}}</td>
               <td>{{ channel.unit }}</td>
               <td>{{ channel.takt }}</td>
 

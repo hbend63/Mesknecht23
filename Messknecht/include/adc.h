@@ -14,7 +14,7 @@ public:
     void init();
     void loop(); 
     float scaleDat(uint8_t channel);
-    u_int16_t rawData(uint8_t channel);     
+    u_int32_t rawData(uint8_t channel);     
     bool errorOccured(){return _error;}
 private:  
     bool _error{false}; 
@@ -22,7 +22,7 @@ private:
     uint32_t _lastTimestamp;
     SemaphoreHandle_t _xSemaphore;    
     CONFIG_T& config = Configuration.get();
-    u_int16_t _channelRawData[ADC_CHANNEL_COUNT]{0};
+    u_int32_t _channelRawData[ADC_CHANNEL_COUNT]{0};
     void readADC();
 };
 
