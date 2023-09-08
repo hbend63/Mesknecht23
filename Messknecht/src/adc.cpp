@@ -60,7 +60,7 @@ void ADCClass::readADC()
   {
      double Uref=1.2*4095/_channelRawData[0];
      double Uakt  = Uref/4095*_channelRawData[channel];
-     _channelRawData[channel]=Uakt*10000;
+     _channelRawData[channel]=Uakt*1000;
   }  
 }
 

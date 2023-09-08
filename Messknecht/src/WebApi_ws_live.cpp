@@ -84,7 +84,10 @@ void WebApiWsLiveClass::generateJsonResponse(JsonVariant& root)
         JsonObject chanData = channels.createNestedObject();   
         chanData["id"] = channel+1; 
         chanData["name"] = config.AD_Converter.ADChannels[channel].Name; 
-        chanData["value"] = ADConverter.scaleDat(channel+1);
+        if (config.AD_Converter.ADChannels[channel].takt_s==0)
+           chanData["value"] = 0;
+        else
+           chanData["value"] = ADConverter.scaleDat(channel+1);
         chanData["unit"] = config.AD_Converter.ADChannels[channel].Unit; 
         chanData["takt"] = config.AD_Converter.ADChannels[channel].takt_s;
     }  
