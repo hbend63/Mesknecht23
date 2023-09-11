@@ -40,6 +40,7 @@ void WebApiInfluxClass::onInfluxAdminGet(AsyncWebServerRequest* request)
     root["token"] = config.InfluxDB_Token;
     root["org"] = config.InfluxDB_Org;
     root["bucket"] = config.InfluxDB_Bucket; 
+    root["name"] = config.InfluxDB_SensorName; 
 
     String json;
     serializeJson(root, json);
@@ -106,6 +107,7 @@ void WebApiInfluxClass::onInfluxAdminPost(AsyncWebServerRequest* request)
     strlcpy(config.InfluxDB_Token, influxdb["token"], sizeof(config.InfluxDB_Token));
     strlcpy(config.InfluxDB_Org, influxdb["org"], sizeof(config.InfluxDB_Org));
     strlcpy(config.InfluxDB_Bucket, influxdb["bucket"], sizeof(config.InfluxDB_Bucket));
+    strlcpy(config.InfluxDB_SensorName, influxdb["name"], sizeof(config.InfluxDB_SensorName));
     
     MessageOutput.println("Influx");
     MessageOutput.println(config.InfluxDB_Url);

@@ -72,6 +72,7 @@ struct CONFIG_T {
     char InfluxDB_Token[INFLUXDB_MAX_TOKEN_STRLEN+1];
     char InfluxDB_Org[INFLUXDB_MAX_ORG_STRLEN+1];
     char InfluxDB_Bucket[INFLUXDB_MAX_BUCKET_STRLEN+1];
+    char InfluxDB_SensorName[INFLUXDB_MAX_BUCKET_STRLEN+1];
 
     char Ntp_Server[NTP_MAX_SERVER_STRLEN + 1];
     char Ntp_Timezone[NTP_MAX_TIMEZONE_STRLEN + 1];

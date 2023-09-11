@@ -605,6 +605,7 @@
         "Url": "Url",
         "Token": "Token",
         "Org": "Organisation",     
-        "Bucket": "Bucket"        
+        "Bucket": "Bucket",   
+        "Name": "Name"             
     }
 }

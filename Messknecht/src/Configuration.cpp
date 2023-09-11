@@ -45,7 +45,7 @@ bool ConfigurationClass::write()
     influxdb["token"] = config.InfluxDB_Token;
     influxdb["org"] = config.InfluxDB_Org;
     influxdb["bucket"] = config.InfluxDB_Bucket; 
-    
+    influxdb["name"] = config.InfluxDB_SensorName; 
 
     JsonObject ntp = doc.createNestedObject("ntp");
     ntp["server"] = config.Ntp_Server;
@@ -151,6 +151,7 @@ bool ConfigurationClass::read()
     strlcpy(config.InfluxDB_Token, influxdb["token"] | INFLUXDB_TOKEN, sizeof(config.InfluxDB_Token));
     strlcpy(config.InfluxDB_Org, influxdb["org"] | INFLUXDB_ORG, sizeof(config.InfluxDB_Org));
     strlcpy(config.InfluxDB_Bucket, influxdb["bucket"] | INFLUXDB_BUCKET, sizeof(config.InfluxDB_Bucket));
+    strlcpy(config.InfluxDB_SensorName, influxdb["name"] | INFLUXDB_BUCKET, sizeof(config.InfluxDB_SensorName));
 
     JsonObject ntp = doc["ntp"];
     strlcpy(config.Ntp_Server, ntp["server"] | NTP_SERVER, sizeof(config.Ntp_Server));

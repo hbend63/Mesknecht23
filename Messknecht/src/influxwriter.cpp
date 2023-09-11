@@ -46,7 +46,7 @@ void InfluxWriterClass::run()
             {
                 
                 if (millis() - _lastTimestamp[channel] > config.AD_Converter.ADChannels[channel].takt_s * 1000) {
-                    Point sensor("bioknecht");
+                    Point sensor(config.InfluxDB_SensorName);
                     String id(config.AD_Converter.ADChannels[channel].channelId);
                     id.concat("_");
                     id.concat(config.AD_Converter.ADChannels[channel].Name);

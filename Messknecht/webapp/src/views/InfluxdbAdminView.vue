@@ -34,6 +34,11 @@
           v-model="influxdbList.influxdb.bucket"
           type="text maxlength=64"
         />
+        <InputElement
+          :label="$t('influxadmin.Name')"
+          v-model="influxdbList.influxdb.name"
+          type="text maxlength=64"
+        />
       </CardElement>
       <button type="submit" class="btn btn-primary mt-3 mb-3">
         {{ $t("adcadmin.Save") }}
