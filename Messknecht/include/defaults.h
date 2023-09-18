@@ -37,3 +37,5 @@
 #define ADC_STD_CHUNIT "V"
 #define ADC_POLL_INTERVALL 1
 #define ADC_CHANNEL_COUNT 8
+#define ADC_REF_VOLTAGE 1280
+#define ADC_BIT 12

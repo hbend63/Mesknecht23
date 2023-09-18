@@ -30,16 +30,22 @@ float ADCClass::scaleDat(uint8_t channel)
     return 0;
   }  
   uint8_t channel_int=channel-1;
-  double faktor = 1.0*(_channelRawData[channel]-config.AD_Converter.ADChannels[channel_int].dglMin)/(config.AD_Converter.ADChannels[channel_int].dglMax-config.AD_Converter.ADChannels[channel_int].dglMin);
-  double result = (config.AD_Converter.ADChannels[channel_int].sclMax-config.AD_Converter.ADChannels[channel_int].sclMin)*faktor+config.AD_Converter.ADChannels[channel_int].sclMin;
-  return result;
+  float m = (1.0*config.AD_Converter.ADChannels[channel_int].sclMax-config.AD_Converter.ADChannels[channel_int].sclMin)/(config.AD_Converter.ADChannels[channel_int].dglMax-config.AD_Converter.ADChannels[channel_int].dglMin);
+  float value = m*_channelRawData[channel]+config.AD_Converter.ADChannels[channel_int].sclMax-m*config.AD_Converter.ADChannels[channel_int].dglMax;
+  
+  // MessageOutput.print("raw: ");
+  // MessageOutput.println(_channelRawData[channel]);  
+  // MessageOutput.print("val: ");
+  // MessageOutput.println(value);
+ 
+  return value;
 }
 
 u_int32_t ADCClass::rawData(u_int8_t channel)
 {  _error = !(channel <= CHAN_MAX_COUNT);
    if (_error) return 0;    
-  MessageOutput.print("rae CH: ");
-  MessageOutput.println(channel);
+  // MessageOutput.print("rae CH: ");
+  // MessageOutput.println(channel);
    return _channelRawData[channel];   
 }
 
@@ -56,11 +62,18 @@ void ADCClass::readADC()
      _channelRawData[channel]=data[channel]/5; 
   
   // Korrektur CH1 bis CH7 und Spannung als virtueller Digitalwert
+  
+  //MessageOutput.print("CH 0: "); MessageOutput.println(_channelRawData[0]);
+
+  u_int32_t Uref = ADC_REF_VOLTAGE*adcMax/_channelRawData[0];
+  //MessageOutput.print("Uref: "); MessageOutput.println(Uref);
   for (int channel = 1; channel < ADC_CHANNEL_COUNT; channel++)
-  {
-     double Uref=1.2*4095/_channelRawData[0];
-     double Uakt  = Uref/4095*_channelRawData[channel];
-     _channelRawData[channel]=Uakt*1000;
+  {     
+     u_int32_t Uakt = Uref*_channelRawData[channel]/adcMax;     
+     //MessageOutput.print("CH "); MessageOutput.print(channel);
+     //MessageOutput.print(" akt: "); MessageOutput.print(_channelRawData[channel]);
+     _channelRawData[channel]=Uakt;
+     //MessageOutput.print(" val: "); MessageOutput.println(Uakt);
   }  
 }
 
