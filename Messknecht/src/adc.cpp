@@ -36,8 +36,7 @@ float ADCClass::scaleDat(uint8_t channel)
   // MessageOutput.print("raw: ");
   // MessageOutput.println(_channelRawData[channel]);  
   // MessageOutput.print("val: ");
-  // MessageOutput.println(value);
- 
+  // MessageOutput.println(value); 
   return value;
 }
 
