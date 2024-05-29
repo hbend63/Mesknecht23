@@ -22,7 +22,8 @@ private:
     uint32_t _lastTimestamp;
     SemaphoreHandle_t _xSemaphore;    
     CONFIG_T& config = Configuration.get();
-    u_int32_t _channelRawData[ADC_CHANNEL_COUNT]{0};
+    u_int32_t _channelRawData[ADC_CHANNEL_COUNT]{0};  
+    u_int32_t adcMax = 1 << ADC_BIT; 
     void readADC();
 };
 

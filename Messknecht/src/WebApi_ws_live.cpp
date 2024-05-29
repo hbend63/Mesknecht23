@@ -87,7 +87,10 @@ void WebApiWsLiveClass::generateJsonResponse(JsonVariant& root)
         if (config.AD_Converter.ADChannels[channel].takt_s==0)
            chanData["value"] = 0;
         else
-           chanData["value"] = ADConverter.scaleDat(channel+1);
+        {
+           float value = 1.0*ADConverter.scaleDat(channel+1);  
+           chanData["value"] = value;           
+        }
         chanData["unit"] = config.AD_Converter.ADChannels[channel].Unit; 
         chanData["takt"] = config.AD_Converter.ADChannels[channel].takt_s;
     }  

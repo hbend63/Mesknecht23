@@ -52,8 +52,8 @@ void WebApiADCClass::onADCAdminGet(AsyncWebServerRequest* request)
         chanData["id"] = i;
         chanData["dmin"] = config.AD_Converter.ADChannels[i-1].dglMin;
         chanData["dmax"] = config.AD_Converter.ADChannels[i-1].dglMax;
-        chanData["smin"] = config.AD_Converter.ADChannels[i-1].sclMin;
-        chanData["smax"] = config.AD_Converter.ADChannels[i-1].sclMax;
+        chanData["smin"] = 1.0*config.AD_Converter.ADChannels[i-1].sclMin;
+        chanData["smax"] = 1.0*config.AD_Converter.ADChannels[i-1].sclMax;
         chanData["takt"] = config.AD_Converter.ADChannels[i-1].takt_s;
     }
     response->setLength();
@@ -128,8 +128,8 @@ void WebApiADCClass::onADCAdminPost(AsyncWebServerRequest* request)
         strlcpy(config.AD_Converter.ADChannels[i].Unit, chanData["unit"], sizeof(config.AD_Converter.ADChannels[i-1].Unit));
         config.AD_Converter.ADChannels[i].channelId = i+1;
         config.AD_Converter.ADChannels[i].dglMin = chanData["dmin"];
-        config.AD_Converter.ADChannels[i].dglMax = chanData["dmax"];
-        config.AD_Converter.ADChannels[i].sclMin = chanData["smin"];
+        config.AD_Converter.ADChannels[i].dglMax = chanData["dmax"];        
+        config.AD_Converter.ADChannels[i].sclMin = chanData["smin"];        
         config.AD_Converter.ADChannels[i].sclMax = chanData["smax"];
         config.AD_Converter.ADChannels[i].takt_s = chanData["takt"];
     }
