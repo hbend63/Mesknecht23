@@ -49,7 +49,7 @@ void ADCClass::readADC()
   for (int i=0; i<5; i++)    
   {     
     for (int channel = 0; channel < ADC_CHANNEL_COUNT; channel++) 
-       data[channel]+=mcp1.analogRead(channel);
+       data[channel]+=mcp1.read(channel);
     delayMicroseconds(1);                   
   }  
   for (int channel = 0; channel < ADC_CHANNEL_COUNT; channel++)
